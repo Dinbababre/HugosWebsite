@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitt CV & Chatt</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 36px;
+        }
+        header p {
+            font-size: 18px;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+        .tab-button:hover {
+            background-color: #555;
+        }
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .active-tab {
+            display: block;
+        }
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        .chat-input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .file-input {
+            width: 18%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .chat-form {
+            display: flex;
+            align-items: center;
+        }
+        .file-upload {
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        .cv-section {
+            margin-bottom: 20px;
+        }
+        .cv-section h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mitt CV & Chatt</h1>
+        <p>Digital Designer & Webbutvecklare</p>
+    </header>
+
+    <div class="container">
+        <!-- Tabbar för navigering -->
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab('cv')">Mitt CV</button>
+            <button class="tab-button" onclick="openTab('chat')">Chatt</button>
+        </div>
+
+        <!-- CV-sektion -->
+        <div id="cv" class="tab-content active-tab">
+            <h2>Curriculum Vitae</h2>
+            <div class="cv-section">
+                <h3>Personlig Information</h3>
+                <p><strong>Namnet:</strong> John Doe</p>
+                <p><strong>Email:</strong> johndoe@example.com</p>
+                <p><strong>Telefon:</strong> +46 123 456 789</p>
+                <p><strong>LinkedIn:</strong> linkedin.com/in/johndoe</p>
+            </div>
+            <div class="cv-section">
+                <h3>Utbildning</h3>
+                <p>2005–2009: Kandidatexamen i Webbutveckling, Universitetet i Stockholm</p>
+            </div>
+            <div class="cv-section">
+                <h3>Arbetslivserfarenhet</h3>
+                <p>2010–2015: Frontend-utvecklare, TechCorp AB</p>
+                <p>2016–2020: Fullstack-utvecklare, CodeWorks</p>
+            </div>
+        </div>
+
+        <!-- Chatt-sektion -->
+        <div id="chat" class="tab-content">
+            <h2>Chatt med mig</h2>
+            <div class="chat-box" id="chat-box">
+                <!-- Chattmeddelanden kommer att visas här -->
+            </div>
+            <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Skriv ett meddelande..." />
+                <input type="file" id="file-input" class="file-input" />
+                <button type="submit">Skicka</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Mitt Namn | Alla rättigheter förbehållna</p>
+    </footer>
+
+    <script>
+        // Hanterar visning av flikar
+        function openTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+            document.getElementById(tabId).classList.add('active-tab');
+        }
+
+        // Chattfunktion med filuppladdning
+        document.getElementById('chat-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Förhindra att formuläret skickas på vanligt sätt
+            const chatInput = document.getElementById('chat-input');
+            const chatBox = document.getElementById('chat-box');
+            const fileInput = document.getElementById('file-input');
+            const message = chatInput.value.trim();
+            const file = fileInput.files[0];
+
+            if (message || file) {
+                const newMessage = document.createElement('div');
+                const messageText = document.createElement('p');
+                messageText.textContent = message;
+                newMessage.appendChild(messageText);
+
+                if (file) {
+                    const fileName = document.createElement('p');
+                    fileName.textContent = `Bifogad fil: ${file.name}`;
+                    newMessage.appendChild(fileName);
+                }
+
+                chatBox.appendChild(newMessage);
+
+                // Rensa fälten efter att meddelandet skickats
+                chatInput.value = '';
+                fileInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight; // Scrolla ner till botten av chatten
+            }
+        });
+
+    </script>
+</body>
+</html>
